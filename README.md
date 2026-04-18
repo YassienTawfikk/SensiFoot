@@ -1,6 +1,6 @@
 # SensiFoot
 
-![Application Overview](https://github.com/user-attachments/assets/22327372-9a6a-437f-8c81-19b6faab3a6c)
+![Application Overview](https://github.com/user-attachments/assets/b9aeb992-1457-407a-9c99-bcd6d838523b)
 
 ## Overview
 
