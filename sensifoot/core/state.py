@@ -15,8 +15,8 @@ class SensorState:
     
     # Constants
     V_CC = 3.3
-    R_FIXED = 10000.0 # 10kOhm resistor
-    FORCE_M = 1000000.0
+    R_FIXED = 10_000.0      # 10 kΩ
+    FORCE_M = 1_000_000.0   # 1 MN
     FORCE_B = 0.0
 
     def update_active_vout(self, voltage: float):
