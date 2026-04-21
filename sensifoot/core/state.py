@@ -8,7 +8,12 @@ class SensorState:
     """
     # Raw Voltage maps sensor_id (0-5) to V_out (0.0 to 3.3V)
     vout_values: Dict[int, float] = field(default_factory=lambda: {
-        0: 0.0, 1: 0.0, 2: 0.0, 3: 0.0, 4: 0.0, 5: 0.0
+        0: 0.0,
+        1: 0.0,
+        2: 0.0,
+        3: 0.0,
+        4: 0.0,
+        5: 0.0
     })
     
     active_sensor_id: int = -1

@@ -16,9 +16,10 @@ def calculate_cop(force_map: dict, centroids: dict) -> Optional[Tuple[float, flo
             weighted_x += f * cx
             weighted_y += f * cy
             total_weight += f
-            
+
     if total_weight > 0:
         return (weighted_x / total_weight, weighted_y / total_weight)
+
     return None
 
 def calculate_gait_phase(force_map: dict) -> str:
