@@ -2,6 +2,7 @@ import math
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QGroupBox, QLabel
 from PyQt5.QtGui import QPainter, QPainterPath, QPen, QColor, QBrush, QFont
 from PyQt5.QtCore import Qt, QPointF, pyqtSignal
+from sensifoot.core.clinical import calculate_cop
 
 class FootWireframeCanvas(QWidget):
     sensorClicked = pyqtSignal(int)
@@ -93,21 +94,8 @@ class FootWireframeCanvas(QWidget):
         self.active_sensor_id = active_id
         self.update()
 
-    def get_cop(self):
-        weighted_x = 0.0
-        weighted_y = 0.0
-        total_weight = 0.0
-        
-        for idx, pt in self.centroids.items():
-            f = self.force_values.get(idx, 0.0)
-            if f > 0:
-                weighted_x += f * pt.x()
-                weighted_y += f * pt.y()
-                total_weight += f
-                
-        if total_weight > 0:
-            return QPointF(weighted_x / total_weight, weighted_y / total_weight)
-        return None
+    def _get_python_centroids(self):
+        return {idx: (pt.x(), pt.y()) for idx, pt in self.centroids.items()}
 
     def mouseMoveEvent(self, event):
         w = self.width()
@@ -226,8 +214,9 @@ class FootWireframeCanvas(QWidget):
             painter.restore()
 
         # Output B: High-Contrast Center of Pressure (CoP) mapping evaluated strictly via Force load
-        cop_pt = self.get_cop()
-        if cop_pt is not None:
+        cop_val = calculate_cop(self.force_values, self._get_python_centroids())
+        if cop_val is not None:
+            cop_pt = QPointF(cop_val[0], cop_val[1])
             painter.setPen(Qt.NoPen)
             painter.setBrush(QBrush(QColor(255, 230, 0, 80)))
             painter.drawEllipse(cop_pt, 10, 10)

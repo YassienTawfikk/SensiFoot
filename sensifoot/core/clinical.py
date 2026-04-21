@@ -1,4 +1,25 @@
-from typing import Tuple, List
+from typing import Tuple, List, Optional
+
+def calculate_cop(force_map: dict, centroids: dict) -> Optional[Tuple[float, float]]:
+    """
+    Calculates the Center of Pressure (CoP) by evaluating the weighted average
+    of physical force loads across structural centroid coordinate assignments.
+    Returns standard (X, Y) float tuple cleanly decoupied from UI implementations.
+    """
+    weighted_x = 0.0
+    weighted_y = 0.0
+    total_weight = 0.0
+    
+    for idx, (cx, cy) in centroids.items():
+        f = force_map.get(idx, 0.0)
+        if f > 0:
+            weighted_x += f * cx
+            weighted_y += f * cy
+            total_weight += f
+            
+    if total_weight > 0:
+        return (weighted_x / total_weight, weighted_y / total_weight)
+    return None
 
 def calculate_gait_phase(force_map: dict) -> str:
     """

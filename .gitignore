@@ -209,3 +209,11 @@ __marimo__/
 CLAUDE.md
 
 .claude/
+
+.DS_Store
+
+.vscode/
+
+.idea/
+
+.agent/
