@@ -2,7 +2,6 @@ COMMERCIAL_THEME_QSS = """
 QMainWindow, QWidget {
     background-color: #0D0D11;
     color: #E2E2E2;
-    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 QGroupBox {
     background-color: #141419;
