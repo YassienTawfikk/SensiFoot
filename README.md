@@ -2,6 +2,11 @@
 
 ![Application Overview](https://github.com/user-attachments/assets/b9aeb992-1457-407a-9c99-bcd6d838523b)
 
+
+## Demo 
+
+https://github.com/user-attachments/assets/094af44e-0ffe-499f-aefa-ac6f6937e622
+
 ## Overview
 
 SensiFoot is a high-fidelity biomedical diagnostic interface and hardware simulator designed to process mathematically accurate Force Sensing Resistor (FSR) telemetry. Moving beyond a basic algorithmic prototype, it simulates complex plantar pressure arrays to provide real-time biomechanical diagnostics. 
