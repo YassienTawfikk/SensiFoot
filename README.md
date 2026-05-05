@@ -41,6 +41,12 @@ The application evaluates critical clinical metrics including Center of Pressure
 * **Center of Pressure (CoP) Tracker**: Visually tracks the exact focal point of patient balance via a mathematically calculated weighted average of force across the active spatial centroids.
 * **Localized Ulcer Risk Alarm**: Continuously listens for critical pressure thresholds (>85N). If exceeded, the system triggers a flashing red visual alert and warning banner to indicate necessary prosthetic adjustment.
 
+### Patient-Centric Analytics & Reporting
+
+* **Adaptive Pressure Thresholds**: Dynamically calculates safe pressure limits based on the inputted patient weight, enabling personalized ulcer risk assessment rather than relying solely on static thresholds.
+* **Voice Coach Assistant**: Provides real-time audio feedback for critical pressure alerts, guiding patients with verbal clinical advice during live posture adjustments.
+* **Clinical PDF Reports**: Automatically generates and exports comprehensive patient posture reports, capturing current stance metrics, visual force distribution maps, and actionable long-term advice for prosthetic alignment.
+
 ---
 
 ## System Architecture
@@ -50,7 +56,7 @@ The application evaluates critical clinical metrics including Center of Pressure
   * `state.py`: Handles the purely mathematical FSR pipeline and sensor state.
   * `clinical.py` & `diagnostics.py`: Drives the algorithmic evaluation for gait phases and lean diagnostics.
 * **Frontend UI**: Modular widget architecture featuring custom painting (`QPainter`) for complex polygon rendering and telemetry layouts aligned with Gestalt principles.
-* **Dependencies**: Relies on `numpy` for data handling and `opencv-python` for legacy heatmap integrations.
+* **Dependencies**: Relies on `numpy` for data handling, `opencv-python` for legacy heatmap integrations, `pyttsx3` for voice coach audio, and `fpdf` for PDF report generation.
 
 ---
 
@@ -92,6 +98,7 @@ The application evaluates critical clinical metrics including Center of Pressure
 2. **Scenario Simulation**: Use the right-side Action Menu to toggle between pre-configured clinical states: `Scenario: Heel Strike`, `Scenario: Mid-Stance`, and `Scenario: Heel-Off` to observe how the Gait Phase HUD and CoP tracker respond automatically.
 3. **Safety Monitoring**: Manually slide a single sensor's input to its maximum threshold to trigger and observe the Localized Ulcer Risk Alarm.
 4. **Display Toggles**: Click "Show Sensors" in the Action Menu to overlay the specific mathematical centroid coordinates used for CoP calculations.
+5. **Patient Specifics & Reporting**: Enter the patient's weight to enable adaptive pressure thresholding. Toggle the "Voice Coach" for audio feedback during high-pressure events, and click "Generate Report" to export a clinical PDF summary of the current stance.
 
 ---
 
