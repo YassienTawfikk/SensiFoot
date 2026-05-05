@@ -13,6 +13,7 @@ class FootWireframeCanvas(QWidget):
         self.setMouseTracking(True)
         
         self.force_values = {i: 0.0 for i in range(6)}
+        self.thresholds = {i: 85.0 for i in range(6)}
         self.active_sensor_id = -1
         self.hovered_sensor_id = -1
 
@@ -89,9 +90,11 @@ class FootWireframeCanvas(QWidget):
         self.show_sensor_nodes = show
         self.update()
 
-    def update_data(self, force_map: dict, active_id: int):
+    def update_data(self, force_map: dict, active_id: int, thresholds: dict = None):
         self.force_values = force_map
         self.active_sensor_id = active_id
+        if thresholds is not None:
+            self.thresholds = thresholds
         self.update()
 
     def _get_python_centroids(self):
@@ -169,7 +172,8 @@ class FootWireframeCanvas(QWidget):
             # Cap opacity visualization at roughly 150N
             fill_op = min(255, max(10, int((force_val / 150.0) * 180)))
             
-            if force_val > 85:
+            threshold = self.thresholds.get(i, 85.0)
+            if force_val > threshold:
                 fill_color = QColor(255, 51, 51, 200) # Blazing critical red
             else:
                 fill_color = QColor(0, 170, 255, fill_op) if is_active else QColor(255, 255, 255, fill_op)
@@ -240,8 +244,8 @@ class FootAssetWidget(QWidget):
         self.canvas.sensorClicked.connect(self.sensorClicked.emit)
         layout.addWidget(self.canvas)
 
-    def update_data(self, force_map: dict, active_id: int):
-        self.canvas.update_data(force_map, active_id)
+    def update_data(self, force_map: dict, active_id: int, thresholds: dict = None):
+        self.canvas.update_data(force_map, active_id, thresholds)
 
     def toggle_sensor_nodes(self, show: bool):
         self.canvas.toggle_sensor_nodes(show)

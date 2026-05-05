@@ -17,6 +17,33 @@ class SensorState:
     })
     
     active_sensor_id: int = -1
+    patient_weight: float = 70.0
+
+    def update_weight(self, new_weight: float):
+        self.patient_weight = new_weight
+
+    @property
+    def heel_threshold(self) -> float:
+        return self.patient_weight * 0.80
+
+    @property
+    def meta_threshold(self) -> float:
+        return self.patient_weight * 0.70
+
+    @property
+    def hallux_threshold(self) -> float:
+        return self.patient_weight * 0.30
+
+    @property
+    def midfoot_lateral_threshold(self) -> float:
+        return self.patient_weight * 0.25
+
+    def get_threshold_for_zone(self, zone_id: int) -> float:
+        if zone_id == 0: return self.heel_threshold
+        if zone_id == 1: return self.midfoot_lateral_threshold
+        if zone_id in [2, 3, 4]: return self.meta_threshold
+        if zone_id == 5: return self.hallux_threshold
+        return 85.0
     
     # Constants
     V_CC = 3.3

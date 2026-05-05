@@ -42,9 +42,9 @@ def calculate_gait_phase(force_map: dict) -> str:
 
     return "MID-STANCE"
 
-def check_ulcer_risk(force_map: dict) -> Tuple[bool, str]:
+def check_ulcer_risk(force_map: dict, patient_weight: float = 70.0) -> Tuple[bool, str]:
     """
-    Triggers true if any localized zone exceeds the 85 Newtons physical threshold.
+    Triggers true if any localized zone exceeds the dynamic weight-based threshold.
     """
     labels = {
         0: "Heel",
@@ -55,8 +55,18 @@ def check_ulcer_risk(force_map: dict) -> Tuple[bool, str]:
         5: "Hallux (Big Toe)"
     }
     
+    thresholds = {
+        0: patient_weight * 0.80,
+        1: patient_weight * 0.25,
+        2: patient_weight * 0.70,
+        3: patient_weight * 0.70,
+        4: patient_weight * 0.70,
+        5: patient_weight * 0.30
+    }
+    
     for sensor_id, force_n in force_map.items():
-        if force_n > 85:
-            return True, f"WARNING: Critical Pressure Load at {labels.get(sensor_id, 'Unknown')} ({force_n:.1f}N). Adjust Prosthetic Alignment."
+        threshold = thresholds.get(sensor_id, 85.0)
+        if force_n > threshold:
+            return True, f"WARNING: Critical Pressure Load at {labels.get(sensor_id, 'Unknown')} ({force_n:.1f}N). Threshold is {threshold:.1f}N."
             
     return False, ""
